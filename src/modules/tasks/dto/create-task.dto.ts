@@ -1,12 +1,23 @@
+import { Type } from 'class-transformer';
 import {
   ArrayMinSize,
   IsArray,
   IsNotEmpty,
-  IsNumber,
   IsOptional,
   IsString,
+  ValidateNested,
 } from 'class-validator';
-
+class Some {
+  @IsString()
+  @IsNotEmpty()
+  s1: string;
+  @IsString()
+  @IsNotEmpty()
+  s2: string;
+  @IsString()
+  @IsNotEmpty()
+  s3: string;
+}
 export class CreateTaskDto {
   @IsString()
   @IsNotEmpty()
@@ -22,4 +33,9 @@ export class CreateTaskDto {
   @IsArray()
   @IsOptional()
   tags?: string[];
+
+  @ValidateNested()
+  @Type(() => Some)
+  @IsNotEmpty()
+  some: Some;
 }
