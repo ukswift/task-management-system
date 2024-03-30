@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthenticationGuard } from './common/guards/authentication/authentication.guard';
+import { ProjectsModule } from './modules/projects/projects.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { AuthenticationGuard } from './common/guards/authentication/authenticati
       }),
     }),
     TasksModule,
+    ProjectsModule,
   ],
   controllers: [AppController],
   providers: [
