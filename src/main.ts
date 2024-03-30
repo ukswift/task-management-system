@@ -19,6 +19,8 @@ async function bootstrap() {
     type: VersioningType.URI,
     defaultVersion: '1',
   });
+  const globalRoutingPrefix = configService.get('GLOBAL_ROUTING_PREFIX');
+  app.setGlobalPrefix(globalRoutingPrefix);
 
   const config = new DocumentBuilder()
     .setTitle('Task management system')
@@ -28,7 +30,7 @@ async function bootstrap() {
     // .addSecurityRequirements('bearer')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup(globalRoutingPrefix, app, document);
 
   const port = configService.get('PORT');
   await app.listen(port);

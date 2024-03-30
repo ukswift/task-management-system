@@ -14,7 +14,8 @@ import { ProjectsModule } from './modules/projects/projects.module';
       cache: true,
       isGlobal: true,
       validationSchema: Joi.object({
-        PORT: Joi.string().required(),
+        PORT: Joi.number().required(),
+        GLOBAL_ROUTING_PREFIX: Joi.string().required(),
       }),
     }),
     TasksModule,
