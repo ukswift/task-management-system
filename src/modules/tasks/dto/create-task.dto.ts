@@ -7,15 +7,16 @@ import {
   IsOptional,
   IsString,
   ValidateNested,
-  isObject,
 } from 'class-validator';
 class Some {
   @IsString()
   @IsNotEmpty()
   s1: string;
+
   @IsString()
   @IsNotEmpty()
   s2: string;
+
   @IsString()
   @IsNotEmpty()
   s3: string;
