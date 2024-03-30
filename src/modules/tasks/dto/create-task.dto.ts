@@ -1,4 +1,11 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import {
+  ArrayMinSize,
+  IsArray,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class CreateTaskDto {
   @IsString()
@@ -8,4 +15,11 @@ export class CreateTaskDto {
   @IsString()
   @IsNotEmpty()
   summary: string;
+
+  @IsString({ each: true })
+  @IsNotEmpty({ each: true })
+  @ArrayMinSize(1)
+  @IsArray()
+  @IsOptional()
+  tags?: string[];
 }
