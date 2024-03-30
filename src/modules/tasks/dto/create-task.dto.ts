@@ -3,9 +3,11 @@ import {
   ArrayMinSize,
   IsArray,
   IsNotEmpty,
+  IsObject,
   IsOptional,
   IsString,
   ValidateNested,
+  isObject,
 } from 'class-validator';
 class Some {
   @IsString()
@@ -38,4 +40,11 @@ export class CreateTaskDto {
   @Type(() => Some)
   @IsNotEmpty()
   some: Some;
+
+  @ValidateNested({ each: true })
+  @Type(() => Some)
+  @IsNotEmpty()
+  @IsObject({ each: true })
+  @IsArray()
+  some2: Some[];
 }
