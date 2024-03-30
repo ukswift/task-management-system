@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { TasksModule } from './modules/tasks/tasks.module';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthenticationGuard } from './common/guards/authentication/authentication.guard';
 
 @Module({
   imports: [
@@ -17,6 +19,12 @@ import * as Joi from 'joi';
     TasksModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthenticationGuard,
+    },
+  ],
 })
 export class AppModule {}

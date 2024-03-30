@@ -18,6 +18,8 @@ async function bootstrap() {
     .setTitle('Task management system')
     .setDescription('Manage your tasks with Restful APIs')
     .setVersion('1.0')
+    .addBearerAuth()
+    .addSecurityRequirements('bearer')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
