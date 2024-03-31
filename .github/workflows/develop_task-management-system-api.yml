@@ -67,7 +67,3 @@ jobs:
           app-name: 'task-management-system-api'
           slot-name: 'Production'
           package: .
-
-      - name: npm start prod
-        run: |
-          npm run start:prod
