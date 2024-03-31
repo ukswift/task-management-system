@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthenticationGuard } from './common/guards/authentication/authentication.guard';
+import { ProjectsModule } from './modules/projects/projects.module';
 
 @Module({
   imports: [
@@ -13,10 +14,12 @@ import { AuthenticationGuard } from './common/guards/authentication/authenticati
       cache: true,
       isGlobal: true,
       validationSchema: Joi.object({
-        PORT: Joi.string().required(),
+        PORT: Joi.number().required(),
+        GLOBAL_ROUTING_PREFIX: Joi.string().required(),
       }),
     }),
     TasksModule,
+    ProjectsModule,
   ],
   controllers: [AppController],
   providers: [
