@@ -10,4 +10,10 @@ export class AppController {
   getHealthStatus() {
     return this.appService.getHealthStatus();
   }
+
+  @Get('temp')
+  @Version(VERSION_NEUTRAL)
+  temp() {
+    return 'temp';
+  }
 }
