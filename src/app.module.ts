@@ -7,6 +7,8 @@ import * as Joi from 'joi';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthenticationGuard } from './common/guards/authentication/authentication.guard';
 import { ProjectsModule } from './modules/projects/projects.module';
+import { LoggerModule } from 'nestjs-pino';
+import { v4 as uuidv4 } from 'uuid';
 
 @Module({
   imports: [
@@ -18,6 +20,21 @@ import { ProjectsModule } from './modules/projects/projects.module';
         GLOBAL_ROUTING_PREFIX: Joi.string().optional().default('api'),
       }),
     }),
+    LoggerModule.forRoot({
+      pinoHttp: {
+        quietReqLogger: true,
+        level: 'trace',
+        genReqId: (_) => {
+          return uuidv4();
+        },
+        formatters: {
+          level: (label, number) => ({
+            level: `${label}-${number}`,
+          }),
+        },
+      },
+    }),
+
     TasksModule,
     ProjectsModule,
   ],
