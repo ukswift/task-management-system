@@ -42,7 +42,11 @@ export class TasksController {
 
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
-    return this.tasksService.update(id, updateTaskDto);
+    const task = await this.tasksService.update(id, updateTaskDto);
+    if (!task) {
+      throw new NotFoundException(`Cannot find task with id ${id}`);
+    }
+    return task;
   }
 
   @Delete(':id')

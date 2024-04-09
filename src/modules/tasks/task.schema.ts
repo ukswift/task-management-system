@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 export class BaseSchema {
+  publicId: string;
   createdAt: Date;
   updatedAt: Date;
   __v: number;
