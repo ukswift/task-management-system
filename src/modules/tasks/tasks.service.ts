@@ -26,7 +26,7 @@ export class TasksService {
     return await this.tasksRepository.updateOne(id, updateTaskDto);
   }
 
-  async remove(id: number) {
-    return `This action removes a #${id} task`;
+  async delete(id: string) {
+    return await this.tasksRepository.deleteOne(id);
   }
 }

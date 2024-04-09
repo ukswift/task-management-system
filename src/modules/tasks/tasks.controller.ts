@@ -37,7 +37,6 @@ export class TasksController {
     if (!task) {
       throw new NotFoundException(`Cannot find task with id ${id}`);
     }
-    console.log({ task });
     return task;
   }
 
@@ -47,7 +46,11 @@ export class TasksController {
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
-    return this.tasksService.remove(+id);
+  async delete(@Param('id') id: string) {
+    const task = await this.tasksService.delete(id);
+    if (!task) {
+      throw new NotFoundException(`Cannot find task with id ${id}`);
+    }
+    return task;
   }
 }

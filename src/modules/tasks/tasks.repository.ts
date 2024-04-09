@@ -59,4 +59,14 @@ export class TasksRepository {
     const { _id, __v, publicId, ...rest } = taskDocJson;
     return { id: publicId, ...rest };
   }
+
+  async deleteOne(id: string) {
+    const taskDocJson = await this.taskModel
+      .findOneAndDelete({ publicId: id })
+      .lean()
+      .exec();
+    if (!taskDocJson) return null;
+    const { _id, __v, publicId, ...rest } = taskDocJson;
+    return { id: publicId, ...rest };
+  }
 }
