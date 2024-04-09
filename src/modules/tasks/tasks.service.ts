@@ -22,8 +22,8 @@ export class TasksService {
     return await this.tasksRepository.findOne(id);
   }
 
-  async update(id: number, updateTaskDto: UpdateTaskDto) {
-    return `This action updates a #${id} task`;
+  async update(id: string, updateTaskDto: UpdateTaskDto) {
+    return await this.tasksRepository.updateOne(id, updateTaskDto);
   }
 
   async remove(id: number) {

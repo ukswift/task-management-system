@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { TaskEntity } from './entities/task.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { BaseSchema, Task } from './task.schema';
-import { Model } from 'mongoose';
+import { Model, UpdateQueryKnownOnly } from 'mongoose';
 
 const tasks: TaskEntity[] = [
   { id: 't1', title: 'Title1', summary: 'Task1 summary', tags: ['finance'] },
@@ -46,5 +46,15 @@ export class TasksRepository {
     if (!taskDoc) return null;
     const { _id, __v, publicId, ...rest } = taskDoc;
     return { id: publicId, ...rest };
+  }
+
+  async updateOne(
+    id: string,
+    payload: Partial<Omit<Task, keyof BaseSchema | 'publicId'>>,
+  ) {
+    return await this.taskModel
+      .findOneAndUpdate({ publicId: id }, payload, { new: true })
+      .lean()
+      .exec();
   }
 }
