@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { TaskEntity } from './entities/task.entity';
 import { InjectModel } from '@nestjs/mongoose';
-import { Task } from './task.schema';
+import { BaseSchema, Task } from './task.schema';
 import { Model } from 'mongoose';
 
 const tasks: TaskEntity[] = [
@@ -17,22 +17,34 @@ const tasks: TaskEntity[] = [
 
 @Injectable()
 export class TasksRepository {
-  constructor(@InjectModel(Task.name) private taskModel: Model<Task>) {}
+  constructor(
+    @InjectModel(Task.name)
+    private taskModel: Model<Task>,
+  ) {}
 
-  async create(task: Task) {
-    const document = await this.taskModel.create(task);
-    const x = document.toJSON();
-    return x;
+  async create(task: Omit<Task, keyof BaseSchema>): Promise<TaskEntity> {
+    const newTaskDoc = await this.taskModel.create(task);
+    const x = newTaskDoc.toJSON();
+
+    const { _id, __v, publicId: id, ...rest } = newTaskDoc.toJSON();
+    return { id, ...rest };
   }
 
   async findAll(): Promise<TaskEntity[]> {
-    const taskDocs = await this.taskModel.find().exec();
+    const taskDocs = await this.taskModel.find().lean().exec();
     return taskDocs.map((taskDoc) => {
-      return taskDoc.toJSON();
+      const { _id, __v, publicId: id, ...rest } = taskDoc;
+      return { id, ...rest };
     });
   }
 
   async findOne(id: string): Promise<TaskEntity> {
-    return tasks.find((task) => task.id === id);
+    const taskDoc = await this.taskModel
+      .findOne({ publicId: id })
+      .lean()
+      .exec();
+    if (!taskDoc) return null;
+    const { _id, __v, publicId, ...rest } = taskDoc;
+    return { id: publicId, ...rest };
   }
 }

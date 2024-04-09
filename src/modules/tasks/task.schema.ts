@@ -1,7 +1,13 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
+export class BaseSchema {
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+}
+
 @Schema({ timestamps: true })
-export class Task {
+export class Task extends BaseSchema {
   @Prop({ required: true, unique: true })
   publicId: string;
 
