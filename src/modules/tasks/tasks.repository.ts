@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { Task } from './entities/task.entity';
+import { TaskEntity } from './entities/task.entity';
+import { InjectModel } from '@nestjs/mongoose';
+import { Task } from './task.schema';
+import { Model } from 'mongoose';
 
-const tasks: Task[] = [
+const tasks: TaskEntity[] = [
   { id: 't1', title: 'Title1', summary: 'Task1 summary', tags: ['finance'] },
   { id: 't2', title: 'Title2', summary: 'Task2 summary', tags: ['IT', 'Ops'] },
   {
@@ -14,11 +17,19 @@ const tasks: Task[] = [
 
 @Injectable()
 export class TasksRepository {
-  async findAll(): Promise<Task[]> {
+  constructor(@InjectModel(Task.name) private taskModel: Model<Task>) {}
+
+  async create(task: Task) {
+    const document = await this.taskModel.create(task);
+    const x = document.toJSON();
+    return x;
+  }
+
+  async findAll(): Promise<TaskEntity[]> {
     return tasks;
   }
 
-  async findOne(id: string): Promise<Task> {
+  async findOne(id: string): Promise<TaskEntity> {
     return tasks.find((task) => task.id === id);
   }
 }
