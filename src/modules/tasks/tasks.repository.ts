@@ -39,12 +39,12 @@ export class TasksRepository {
   }
 
   async findOne(id: string): Promise<TaskEntity> {
-    const taskDoc = await this.taskModel
+    const taskDocJson = await this.taskModel
       .findOne({ publicId: id })
       .lean()
       .exec();
-    if (!taskDoc) return null;
-    const { _id, __v, publicId, ...rest } = taskDoc;
+    if (!taskDocJson) return null;
+    const { _id, __v, publicId, ...rest } = taskDocJson;
     return { id: publicId, ...rest };
   }
 
@@ -52,9 +52,11 @@ export class TasksRepository {
     id: string,
     payload: Partial<Omit<Task, keyof BaseSchema | 'publicId'>>,
   ) {
-    return await this.taskModel
+    const taskDocJson = await this.taskModel
       .findOneAndUpdate({ publicId: id }, payload, { new: true })
       .lean()
       .exec();
+    const { _id, __v, publicId, ...rest } = taskDocJson;
+    return { id: publicId, ...rest };
   }
 }
