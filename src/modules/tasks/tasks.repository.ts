@@ -26,7 +26,10 @@ export class TasksRepository {
   }
 
   async findAll(): Promise<TaskEntity[]> {
-    return tasks;
+    const taskDocs = await this.taskModel.find().exec();
+    return taskDocs.map((taskDoc) => {
+      return taskDoc.toJSON();
+    });
   }
 
   async findOne(id: string): Promise<TaskEntity> {

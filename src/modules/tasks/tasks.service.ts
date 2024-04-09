@@ -2,12 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { TasksRepository } from './tasks.repository';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class TasksService {
   constructor(private tasksRepository: TasksRepository) {}
   async create(createTaskDto: CreateTaskDto) {
-    return await this.tasksRepository.create(createTaskDto);
+    return await this.tasksRepository.create({
+      ...createTaskDto,
+      publicId: uuidv4(),
+    });
   }
 
   async findAll() {
