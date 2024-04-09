@@ -5,17 +5,6 @@ import { BaseSchema, Task } from './task.schema';
 import { Model } from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
 
-const tasks: TaskEntity[] = [
-  { id: 't1', title: 'Title1', summary: 'Task1 summary', tags: ['finance'] },
-  { id: 't2', title: 'Title2', summary: 'Task2 summary', tags: ['IT', 'Ops'] },
-  {
-    id: 't3',
-    title: 'Title3',
-    summary: 'Task3 summary',
-    tags: ['finance', 'sales'],
-  },
-];
-
 @Injectable()
 export class TasksRepository {
   constructor(
@@ -28,7 +17,6 @@ export class TasksRepository {
       ...task,
       publicId: uuidv4(),
     });
-    const x = newTaskDoc.toJSON();
 
     const { _id, __v, publicId: id, ...rest } = newTaskDoc.toJSON();
     return { id, ...rest };
