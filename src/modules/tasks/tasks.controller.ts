@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Logger,
+  NotFoundException,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -31,8 +32,13 @@ export class TasksController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.tasksService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const task = await this.tasksService.findOne(id);
+    if (!task) {
+      throw new NotFoundException(`Cannot find task with id ${id}`);
+    }
+    console.log({ task });
+    return task;
   }
 
   @Patch(':id')
