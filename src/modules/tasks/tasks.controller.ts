@@ -28,7 +28,7 @@ export class TasksController {
 
   @Get()
   async findAll() {
-    return this.tasksService.findAll();
+    return await this.tasksService.findAll();
   }
 
   @Get(':id')
