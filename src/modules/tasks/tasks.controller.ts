@@ -7,12 +7,12 @@ import {
   Param,
   Delete,
   Logger,
-  NotFoundException,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { TaskNotFoundException } from './exceptions';
 
 @Controller('tasks')
 @ApiTags('Tasks')
@@ -35,7 +35,7 @@ export class TasksController {
   async findOne(@Param('id') id: string) {
     const task = await this.tasksService.findOne(id);
     if (!task) {
-      throw new NotFoundException(`Cannot find task with id ${id}`);
+      throw new TaskNotFoundException(id);
     }
     return task;
   }
@@ -44,7 +44,7 @@ export class TasksController {
   async update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
     const task = await this.tasksService.update(id, updateTaskDto);
     if (!task) {
-      throw new NotFoundException(`Cannot find task with id ${id}`);
+      throw new TaskNotFoundException(id);
     }
     return task;
   }
@@ -53,7 +53,7 @@ export class TasksController {
   async delete(@Param('id') id: string) {
     const task = await this.tasksService.delete(id);
     if (!task) {
-      throw new NotFoundException(`Cannot find task with id ${id}`);
+      throw new TaskNotFoundException(id);
     }
     return task;
   }
