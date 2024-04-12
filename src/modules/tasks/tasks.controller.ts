@@ -16,7 +16,6 @@ import { ApiTags } from '@nestjs/swagger';
 import { TaskNotFoundException } from './exceptions';
 import { PaginationParams } from '../../common/decorators/pagination-params.decorator';
 import { PaginationQueryDto } from './dto/pagination-query.dto';
-import { query } from 'express';
 
 @Controller('tasks')
 @ApiTags('Tasks')
@@ -32,12 +31,10 @@ export class TasksController {
 
   @Get()
   async findAll(@Query() x: PaginationQueryDto) {
-    console.log(x);
     return await this.tasksService.findAll();
   }
   @Get('/ww')
   async findAll2(@PaginationParams() x: PaginationQueryDto) {
-    console.log(x);
     return await this.tasksService.findAll();
   }
 
