@@ -12,6 +12,7 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
       whitelist: true,
       transform: true,
+      validateCustomDecorators: true,
     }),
   );
 
