@@ -1,12 +1,26 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { ValidationPipe, VersioningType } from '@nestjs/common';
+import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
+  const logger = app.get(Logger);
+  logger.log(process.env.MONGODB_URI);
+  logger.log(process.env.MONGODB_URI);
+  logger.log(process.env.MONGODB_URI);
+  logger.log(process.env.MONGODB_URI);
+  logger.log(process.env.MONGODB_URI);
+  logger.log(process.env.MONGODB_URI);
+  logger.log(process.env.MONGODB_URI);
+  logger.log(process.env.MONGODB_URI);
+  logger.log(process.env.MONGODB_URI);
+  logger.log(process.env.MONGODB_URI);
+  logger.log(process.env.MONGODB_URI);
+  logger.log(process.env.MONGODB_URI);
+  logger.log(process.env.MONGODB_URI);
   app.useGlobalPipes(
     new ValidationPipe({
       forbidNonWhitelisted: true,
