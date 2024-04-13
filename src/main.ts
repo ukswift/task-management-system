@@ -25,7 +25,7 @@ async function bootstrap() {
   app.setGlobalPrefix(globalRoutingPrefix);
 
   const config = new DocumentBuilder()
-    .setTitle('Task management system')
+    .setTitle('Task management systemmmmm')
     .setDescription('Manage your tasks with Restful APIs')
     .setVersion('0.0.1')
     // .addBearerAuth()
