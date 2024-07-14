@@ -32,6 +32,9 @@ import { v4 as uuidv4 } from 'uuid';
             level: `${label}-${number}`,
           }),
         },
+        transport: {
+          target: 'pino-pretty',
+        },
       },
     }),
 

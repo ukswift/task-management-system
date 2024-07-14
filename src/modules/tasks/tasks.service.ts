@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
+import { setTimeout } from 'timers/promises';
 
 @Injectable()
 export class TasksService {
@@ -16,8 +17,12 @@ export class TasksService {
     return createTaskDto;
   }
 
-  findAll() {
-    return `This action returns all tasks`;
+  async findAll() {
+    this.logger.warn('warnwarnwarnwarnwarnwarnwarn');
+    this.logger.warn({ a: 2, b: 4, t: 'kkkkkkkkkkkkkkk' });
+    await setTimeout(1000);
+    this.logger.error(new Error('ssssssssss'));
+    return { lll: `This action returns all tasks` };
   }
 
   findOne(id: number) {

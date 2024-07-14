@@ -26,7 +26,8 @@ export class TasksController {
   }
 
   @Get()
-  findAll() {
+  async findAll() {
+    this.logger.verbose('ppppppppppppppppppppppppppppp');
     return this.tasksService.findAll();
   }
 
