@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TasksModule } from './modules/tasks/tasks.module';
@@ -9,6 +9,7 @@ import { AuthenticationGuard } from './common/guards/authentication/authenticati
 import { ProjectsModule } from './modules/projects/projects.module';
 import { LoggerModule } from 'nestjs-pino';
 import { v4 as uuidv4 } from 'uuid';
+import { LoggerMiddleware } from './common/middlewares/logger/logger.middleware';
 
 @Module({
   imports: [
@@ -50,4 +51,8 @@ import { v4 as uuidv4 } from 'uuid';
     },
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('*');
+  }
+}
