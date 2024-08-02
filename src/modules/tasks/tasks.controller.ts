@@ -32,7 +32,7 @@ export class TasksController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: Promise<string>) {
     return this.tasksService.findOne(+id);
   }
 
@@ -42,7 +42,7 @@ export class TasksController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.tasksService.remove(+id);
+  async remove(@Param('id') id: string): Promise<string> {
+    return await this.tasksService.remove(id);
   }
 }

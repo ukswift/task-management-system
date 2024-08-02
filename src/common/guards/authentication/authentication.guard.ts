@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthenticationGuard implements CanActivate {
-  private readonly logger = new Logger(AuthenticationGuard.name);
+  private readonly _logger = new Logger(AuthenticationGuard.name);
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
@@ -18,7 +18,6 @@ export class AuthenticationGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
     if (!token) {
-      this.logger.log('No token found, access denied');
       throw new UnauthorizedException();
     }
     return true;
@@ -28,3 +27,5 @@ export class AuthenticationGuard implements CanActivate {
     return type === 'Bearer' ? token : undefined;
   }
 }
+
+interface ss {}

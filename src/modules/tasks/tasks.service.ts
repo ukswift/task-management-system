@@ -26,14 +26,22 @@ export class TasksService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} task`;
+    if (2) {
+      console.log(223);
+      return `This action returns a #${id} task`;
+    } else {
+    }
   }
 
   update(id: number, updateTaskDto: UpdateTaskDto) {
     return `This action updates a #${id} task`;
   }
 
-  remove(id: number) {
+  async remove(id: string): Promise<string> {
     return `This action removes a #${id} task`;
   }
+}
+
+enum Pp {
+  ss = 67,
 }
