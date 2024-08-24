@@ -51,15 +51,15 @@ import { Request } from 'express';
         customReceivedObject: (req, res, val) => {
           return req;
         },
-        // customLogLevel: function (res, err) {
-        //   console.log({ pppppppppppppp: res.statusCode });
-        //   // if (res.statusCode >= 400 && res.statusCode < 500) {
-        //   //   return 'warn';
-        //   // } else if (res.statusCode >= 500 || err) {
-        //   //   return 'error';
-        //   // }
-        //   return 'info';
-        // },
+        customLogLevel: function (req, res, err) {
+          console.log({ pppppppppppppp: res.statusCode });
+          if (res.statusCode >= 400 && res.statusCode < 500) {
+            return 'warn';
+          } else if (res.statusCode >= 500 || err) {
+            return 'error';
+          }
+          return 'info';
+        },
       },
     }),
 
