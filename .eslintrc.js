@@ -21,12 +21,24 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
-    'prettier/prettier': [
+    'no-console': 'error',
+    '@typescript-eslint/naming-convention': [
       'error',
       {
-        endOfLine: 'auto',
+        selector: 'interface',
+        format: ['PascalCase'],
+        custom: {
+          regex: '^I[A-Z]',
+          match: true,
+        },
+      },
+      {
+        selector: 'memberLike',
+        modifiers: ['private'],
+        format: ['camelCase'],
+        leadingUnderscore: 'require',
       },
     ],
-    'no-console': 'error',
+    // '@typescript-eslint/explicit-function-return-type': 'error',
   },
 };
