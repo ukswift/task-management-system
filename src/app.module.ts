@@ -10,6 +10,7 @@ import { ProjectsModule } from './modules/projects/projects.module';
 import { LoggerModule } from 'nestjs-pino';
 import { v4 as uuidv4 } from 'uuid';
 import { LoggerMiddleware } from './common/middlewares/logger/logger.middleware';
+import { Request } from 'express';
 
 @Module({
   imports: [
@@ -25,17 +26,40 @@ import { LoggerMiddleware } from './common/middlewares/logger/logger.middleware'
       pinoHttp: {
         quietReqLogger: true,
         level: 'trace',
-        genReqId: (_) => {
-          return uuidv4();
+        genReqId: (req: Request) => {
+          return req.headers['x-correlation-id'] ?? uuidv4();
         },
-        formatters: {
-          level: (label, number) => ({
-            level: `${label}-${number}`,
-          }),
-        },
+        customAttributeKeys: { reqId: 'correlationId' },
+        // formatters: {
+        //   level: (label, number) => ({
+        //     level: `${label}-${number}`,
+        //   }),
+        // },
         transport: {
-          target: 'pino-pretty',
+          targets: [
+            { target: 'pino-pretty' },
+            {
+              target: 'pino/file',
+              options: { destination: './logs/logs.log' },
+            },
+          ],
         },
+
+        customReceivedMessage: (req, res) => {
+          return `request received: ${req.method} ${req.url}`;
+        },
+        customReceivedObject: (req, res, val) => {
+          return req;
+        },
+        // customLogLevel: function (res, err) {
+        //   console.log({ pppppppppppppp: res.statusCode });
+        //   // if (res.statusCode >= 400 && res.statusCode < 500) {
+        //   //   return 'warn';
+        //   // } else if (res.statusCode >= 500 || err) {
+        //   //   return 'error';
+        //   // }
+        //   return 'info';
+        // },
       },
     }),
 

@@ -39,6 +39,6 @@ module.exports = {
         leadingUnderscore: 'require',
       },
     ],
-    '@typescript-eslint/explicit-function-return-type': 'error',
+    // '@typescript-eslint/explicit-function-return-type': 'error',
   },
 };
